@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Pipeline Pursuit</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .opportunity {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 6px;
+    }
+    .form-group {
+      margin: 10px 0;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+    }
+    select, input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #summary {
+      display: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Sales Pipeline Pursuit</h1>
+    <p>Evaluate each opportunity and make your decision: Pursue or Pass?</p>
+
+    <div id="opportunityContainer"></div>
+
+    <div id="summary">
+      <h2>Summary</h2>
+      <p id="summaryText"></p>
+    </div>
+  </div>
+
+  <script>
+    const opportunities = [
+      {
+        name: "BrightView Logistics",
+        industry: "Transportation",
+        budget: "Medium",
+        painPoints: "Delivery delays, outdated routing software",
+        fit: "High",
+        timeline: "1–2 months",
+        decisionMaker: "Operations Director, accessible via LinkedIn",
+        competition: "One existing vendor"
+      },
+      {
+        name: "Medix Solutions",
+        industry: "Healthcare",
+        budget: "High",
+        painPoints: "Disconnected CRM tools",
+        fit: "High",
+        timeline: "3 months",
+        decisionMaker: "Moderate access via email",
+        competition: "One other vendor"
+      },
+      {
+        name: "EcoRetail Group",
+        industry: "Retail",
+        budget: "Low",
+        painPoints: "High employee turnover, inconsistent sales data",
+        fit: "Medium",
+        timeline: "6+ months",
+        decisionMaker: "Difficult to access",
+        competition: "Many"
+      },
+      {
+        name: "NexTech Manufacturing",
+        industry: "Manufacturing",
+        budget: "Medium",
+        painPoints: "Supply chain inefficiencies, manual tracking",
+        fit: "High",
+        timeline: "Immediate",
+        decisionMaker: "Easily accessible CTO",
+        competition: "None"
+      },
+      {
+        name: "GreenScape Landscaping",
+        industry: "Services",
+        budget: "Medium",
+        painPoints: "Unclear customer segmentation, outdated software",
+        fit: "Low",
+        timeline: "3 months",
+        decisionMaker: "Moderate access",
+        competition: "Two vendors"
+      }
+    ];
+
+    const container = document.getElementById("opportunityContainer");
+
+    opportunities.forEach((opp, index) => {
+      const oppDiv = document.createElement("div");
+      oppDiv.className = "opportunity";
+      oppDiv.innerHTML = `
+        <h2>${opp.name}</h2>
+        <p><strong>Industry:</strong> ${opp.industry}</p>
+        <p><strong>Budget:</strong> ${opp.budget}</p>
+        <p><strong>Pain Points:</strong> ${opp.painPoints}</p>
+        <p><strong>Strategic Fit:</strong> ${opp.fit}</p>
+        <p><strong>Timeline:</strong> ${opp.timeline}</p>
+        <p><strong>Decision Maker:</strong> ${opp.decisionMaker}</p>
+        <p><strong>Competition:</strong> ${opp.competition}</p>
+        <div class="form-group">
+          <label for="decision${index}">Decision (Pursue or Pass):</label>
+          <select id="decision${index}">
+            <option value="">Select</option>
+            <option value="Pursue">Pursue</option>
+            <option value="Pass">Pass</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="rationale${index}">Justification:</label>
+          <input type="text" id="rationale${index}" placeholder="Why did you make this choice?">
+        </div>
+      `;
+      container.appendChild(oppDiv);
+    });
+
+    const summary = document.createElement("button");
+    summary.textContent = "Submit All Responses";
+    summary.onclick = () => {
+      let summaryText = "<ul>";
+      opportunities.forEach((opp, index) => {
+        const decision = document.getElementById(`decision${index}`).value;
+        const rationale = document.getElementById(`rationale${index}`).value;
+        summaryText += `<li><strong>${opp.name}</strong>: ${decision} – ${rationale}</li>`;
+      });
+      summaryText += "</ul>";
+      document.getElementById("summaryText").innerHTML = summaryText;
+      document.getElementById("summary").style.display = "block";
+      window.scrollTo(0, document.body.scrollHeight);
+    };
+
+    container.appendChild(summary);
+  </script>
+</body>
+</html>
