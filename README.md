@@ -1,2 +1,2 @@
-# sales-pipeline-pursuit
+# index.html
 Pipeline Game
